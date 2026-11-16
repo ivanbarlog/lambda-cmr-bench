@@ -1,0 +1,12 @@
+{
+  "name": "cmr-bun-bench",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Benchmark handlers for the CMR-vs-layer Bun runtime comparison. @aws-sdk/client-s3 is bundled into the aws-sdk handler variant at build time; @beesolve/lambda-bun-runtime is installed only to source the prebuilt Bun layer zip (dist/bun-lambda-layer-*.zip) — its code is never bundled into a handler.",
+  "devDependencies": {
+    "@aws-sdk/client-s3": "^3.1123.0",
+    "@beesolve/lambda-bun-runtime": "3.10404.0",
+    "@types/bun": "^1.4.0"
+  }
+}

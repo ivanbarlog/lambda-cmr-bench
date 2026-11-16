@@ -1,0 +1,12 @@
+#!/bin/sh
+set -eu
+
+# Bun is copied to /usr/local/bin/bun in the Dockerfile. Reference it by absolute
+# path — the Lambda execution environment does not guarantee /usr/local/bin on PATH.
+BUN_BIN="${BUN_BIN:-/usr/local/bin/bun}"
+if [ ! -x "${BUN_BIN}" ]; then
+	echo "Bun binary not found or not executable at ${BUN_BIN}" >&2
+	exit 127
+fi
+
+exec "${BUN_BIN}" /var/runtime/runtime.mjs

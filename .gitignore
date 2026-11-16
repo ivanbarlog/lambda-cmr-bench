@@ -1,0 +1,9 @@
+node_modules/
+results/
+*.log
+
+# transient build artifacts (handlers are built to /tmp by the scripts)
+.bun-build/
+
+# env
+mise.toml

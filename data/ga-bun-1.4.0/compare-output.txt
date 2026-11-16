@@ -1,0 +1,208 @@
+
+Samples: 1170 ok / 1170 total across 9 variant(s):
+  cmr/aws-sdk, cmr/bun, docker-snap/aws-sdk, docker-snap/bun, docker/aws-sdk, docker/bun, layer/aws-sdk, layer/bun, node/aws-sdk
+
+### Bundle size (minified handler JS, before zip)
+s3client        bytes        KB
+bun              2317       2.3
+awssdk         490246     478.8
+node           567651     554.3
+
+
+### initDurationMs (cold only)
+variant            phase     n      mean       p50       p95       min       max
+cmr/aws-sdk        cold     10     302.9     254.5     567.0     197.0     660.6
+cmr/bun            cold     11     103.4      81.2     205.3      64.8     293.6
+docker/aws-sdk     cold     10     230.2     193.3     388.8     152.1     493.3
+docker/bun         cold     10     100.2      83.6     189.4      65.8     202.6
+layer/aws-sdk      cold     10     392.9     371.6     445.1     354.4     445.8
+layer/bun          cold     10     163.2     154.8     189.2     142.1     190.1
+node/aws-sdk       cold     10     271.7     287.7     299.3     224.6     303.3
+
+### restoreMs (cold only)
+variant            phase     n      mean       p50       p95       min       max
+docker-snap/aws-sdk cold     10     517.9     463.4     760.8     407.9     886.7
+docker-snap/bun    cold     10     361.2     362.8     408.3     301.1     415.8
+
+### durationMs
+variant            phase     n      mean       p50       p95       min       max
+cmr/aws-sdk        cold     10    1536.2    1502.2    1799.5    1388.4    1914.3
+cmr/aws-sdk        warm    100     397.7     392.3     563.9     241.8     682.4
+cmr/bun            cold     11     463.5     363.0     948.4     291.4    1423.0
+cmr/bun            warm     99     170.4     158.6     244.7     115.0     337.0
+docker-snap/aws-sdk cold     10    1496.8    1442.6    1699.7    1349.7    1737.2
+docker-snap/aws-sdk warm    190     478.4     434.5     812.0     232.4    1244.6
+docker-snap/bun    cold     10     487.7     448.0     619.2     409.8     641.5
+docker-snap/bun    warm    190     369.9     213.9     341.6     122.6   27336.8
+docker/aws-sdk     cold     10    1446.2    1429.9    1618.9    1206.4    1681.0
+docker/aws-sdk     warm    100     391.6     377.4     559.0     259.4     735.7
+docker/bun         cold     10     368.8     361.3     456.1     273.9     459.1
+docker/bun         warm    100     177.1     181.8     238.7     108.9     360.3
+layer/aws-sdk      cold     10    1629.8    1624.0    1770.1    1451.7    1784.5
+layer/aws-sdk      warm    100     399.2     381.2     566.7     257.0     791.4
+layer/bun          cold     10     541.9     512.3     622.1     482.8     635.0
+layer/bun          warm    100     174.5     166.7     248.7     109.9     342.6
+node/aws-sdk       cold     10    1383.4    1355.2    1527.2    1252.8    1569.8
+node/aws-sdk       warm    100     487.0     466.3     689.0     332.7     777.7
+
+### clientMs
+variant            phase     n      mean       p50       p95       min       max
+cmr/aws-sdk        cold     10    2445.1    2373.7    3002.8    2131.0    3259.0
+cmr/aws-sdk        warm    100     853.9     822.2    1105.9     653.3    2001.3
+cmr/bun            cold     11   22445.1    1015.9  118767.3     901.2  235185.4
+cmr/bun            warm     99    1873.7     595.0     693.1     514.5  126252.4
+docker-snap/aws-sdk cold     10    2841.6    2828.5    3062.8    2629.4    3106.0
+docker-snap/aws-sdk warm    190    1055.4     961.2    1599.7     660.3    1945.8
+docker-snap/bun    cold     10    1676.1    1627.0    1822.5    1582.6    1846.8
+docker-snap/bun    warm    190     945.8     758.2    1051.4     545.6   27789.7
+docker/aws-sdk     cold     10    2302.4    2210.3    2678.8    2130.3    2892.8
+docker/aws-sdk     warm    100     837.5     831.5    1016.3     668.9    1184.9
+docker/bun         cold     10    1094.7    1099.6    1232.1     954.7    1242.9
+docker/bun         warm    100     621.7     610.0     705.8     520.7    1641.9
+layer/aws-sdk      cold     10    2785.2    2731.3    3030.3    2470.4    3054.7
+layer/aws-sdk      warm    100     833.8     812.8    1003.2     672.9    1200.6
+layer/bun          cold     10    1439.2    1416.5    1624.7    1233.7    1629.9
+layer/bun          warm    100     579.3     565.3     698.4     503.0     738.3
+node/aws-sdk       cold     10    2205.7    2203.0    2402.4    2026.5    2473.3
+node/aws-sdk       warm    100     937.4     916.3    1157.4     742.0    1208.2
+
+### billedMs
+variant            phase     n      mean       p50       p95       min       max
+cmr/aws-sdk        cold     10    1839.5    1771.0    2366.6    1586.0    2575.0
+cmr/aws-sdk        warm    100     398.2     393.0     564.4     242.0     683.0
+cmr/bun            cold     11     567.5     445.0    1145.5     364.0    1717.0
+cmr/bun            warm     99     170.8     159.0     245.1     115.0     338.0
+docker-snap/aws-sdk cold     10    1543.0    1494.0    1716.1    1406.0    1753.0
+docker-snap/aws-sdk warm    190     478.9     435.0     812.7     233.0    1245.0
+docker-snap/bun    cold     10     490.9     450.0     625.0     412.0     643.0
+docker-snap/bun    warm    190     370.4     214.5     342.1     123.0   27337.0
+docker/aws-sdk     cold     10    1676.8    1620.0    1999.9    1359.0    2175.0
+docker/aws-sdk     warm    100     392.1     378.0     559.8     260.0     736.0
+docker/bun         cold     10     469.5     504.5     551.7     340.0     558.0
+docker/bun         warm    100     177.6     182.0     239.2     109.0     361.0
+layer/aws-sdk      cold     10    2023.3    1991.0    2215.5    1807.0    2229.0
+layer/aws-sdk      warm    100     399.7     382.0     567.0     257.0     792.0
+layer/bun          cold     10     705.7     660.5     803.0     629.0     812.0
+layer/bun          warm    100     174.9     167.0     249.3     110.0     343.0
+node/aws-sdk       cold     10    1655.6    1646.0    1825.8    1480.0    1874.0
+node/aws-sdk       warm    100     487.5     467.0     689.4     333.0     778.0
+
+### coldStartMs (cold only = (Restore|Init) + Duration)
+variant            phase     n      mean       p50       p95       min       max
+cmr/aws-sdk        cold     10    1839.1    1770.6    2366.5    1585.4    2574.8
+cmr/bun            cold     11     566.9     444.2    1145.0     363.2    1716.6
+docker-snap/aws-sdk cold     10    2014.7    2011.5    2217.8    1778.3    2236.4
+docker-snap/bun    cold     10     848.8     808.0    1014.2     717.2    1040.8
+docker/aws-sdk     cold     10    1676.4    1619.5    1999.3    1358.5    2174.3
+docker/bun         cold     10     469.0     504.0     551.1     339.7     557.2
+layer/aws-sdk      cold     10    2022.7    1990.7    2215.1    1806.1    2228.9
+layer/bun          cold     10     705.1     659.8     802.3     628.0     811.1
+node/aws-sdk       cold     10    1655.1    1645.5    1825.1    1479.8    1873.0
+
+### handler.initToFirstInvokeMs (cold only)
+variant            phase     n      mean       p50       p95
+cmr/aws-sdk        cold     10      25.3      24.8      29.4
+cmr/bun            cold     11      13.8      12.3      21.3
+docker-snap/aws-sdk cold     10     913.9     883.9    1157.1
+docker-snap/bun    cold     10     490.9     497.4     537.1
+docker/aws-sdk     cold     10      25.2      22.0      38.5
+docker/bun         cold     10      13.0      11.9      19.5
+layer/aws-sdk      cold     10      47.1      46.0      59.7
+layer/bun          cold     10      27.5      27.9      30.8
+node/aws-sdk       cold     10      12.2      12.4      14.3
+
+### handler.handlerMs
+variant            phase     n      mean       p50       p95
+cmr/aws-sdk        cold     10    1495.2    1454.7    1777.0
+cmr/aws-sdk        warm    100     384.0     377.4     544.8
+cmr/bun            cold     11     444.2     355.5     882.5
+cmr/bun            warm     99     166.6     156.6     238.3
+docker-snap/aws-sdk cold     10    1437.6    1384.3    1600.5
+docker-snap/aws-sdk warm    190     462.4     423.4     771.3
+docker-snap/bun    cold     10     458.2     423.0     588.1
+docker-snap/bun    warm    190     366.1     210.5     334.8
+docker/aws-sdk     cold     10    1407.2    1392.7    1581.7
+docker/aws-sdk     warm    100     378.1     364.6     535.5
+docker/bun         cold     10     359.5     348.9     446.5
+docker/bun         warm    100     175.1     178.9     236.5
+layer/aws-sdk      cold     10    1579.7    1574.7    1725.6
+layer/aws-sdk      warm    100     387.3     367.9     552.4
+layer/bun          cold     10     514.0     480.6     596.8
+layer/bun          warm    100     171.9     163.4     244.5
+node/aws-sdk       cold     10    1355.4    1339.8    1484.2
+node/aws-sdk       warm    100     477.5     459.6     673.4
+
+### handler.writeMsTotal
+variant            phase     n      mean       p50       p95
+cmr/aws-sdk        cold     10    1062.6    1030.0    1275.8
+cmr/aws-sdk        warm    100     189.2     187.9     300.2
+cmr/bun            cold     11     307.0     260.1     551.7
+cmr/bun            warm     99      84.1      79.9     132.9
+docker-snap/aws-sdk cold     10    1043.9    1006.3    1141.2
+docker-snap/aws-sdk warm    190     277.9     217.6     537.2
+docker-snap/bun    cold     10     312.6     288.3     406.8
+docker-snap/bun    warm    190     271.2     112.3     230.0
+docker/aws-sdk     cold     10     985.9     969.8    1090.8
+docker/aws-sdk     warm    100     181.7     169.5     277.6
+docker/bun         cold     10     260.7     258.4     331.5
+docker/bun         warm    100      87.1      85.0     132.5
+layer/aws-sdk      cold     10    1118.4    1105.2    1215.3
+layer/aws-sdk      warm    100     184.6     172.2     291.9
+layer/bun          cold     10     366.1     348.4     416.8
+layer/bun          warm    100      82.8      84.2     117.2
+node/aws-sdk       cold     10     988.9     987.4    1093.4
+node/aws-sdk       warm    100     245.0     242.1     371.3
+
+### handler.readMsTotal
+variant            phase     n      mean       p50       p95
+cmr/aws-sdk        cold     10     429.7     413.2     500.2
+cmr/aws-sdk        warm    100     194.7     183.2     267.7
+cmr/bun            cold     11     121.6      94.4     290.9
+cmr/bun            warm     99      82.3      83.1     108.5
+docker-snap/aws-sdk cold     10     383.6     379.2     443.7
+docker-snap/aws-sdk warm    190     183.4     177.9     282.1
+docker-snap/bun    cold     10      94.7      83.5     125.2
+docker-snap/bun    warm    190      94.8      96.7     132.4
+docker/aws-sdk     cold     10     416.8     424.4     485.3
+docker/aws-sdk     warm    100     196.0     195.8     278.6
+docker/bun         cold     10      92.5      87.4     113.9
+docker/bun         warm    100      87.9      90.8     125.3
+layer/aws-sdk      cold     10     457.5     479.3     513.1
+layer/aws-sdk      warm    100     202.5     192.8     294.3
+layer/bun          cold     10     122.0     119.2     161.8
+layer/bun          warm    100      89.0      87.1     134.3
+node/aws-sdk       cold     10     365.8     368.9     398.1
+node/aws-sdk       warm    100     232.1     207.8     344.4
+
+### Verdicts
+
+  -- Delivery: CMR image vs Lambda layer (same S3 client) --
+  initDurationMs (cold) p50: cmr/bun=81.2ms vs layer/bun=154.8ms -> cmr/bun faster by 90.6%
+  durationMs (warm) p50: cmr/bun=158.6ms vs layer/bun=166.7ms -> cmr/bun faster by 5.1%
+  initDurationMs (cold) p50: cmr/aws-sdk=254.5ms vs layer/aws-sdk=371.6ms -> cmr/aws-sdk faster by 46.0%
+  durationMs (warm) p50: cmr/aws-sdk=392.3ms vs layer/aws-sdk=381.2ms -> layer/aws-sdk faster by 2.9%
+
+  -- S3 client: Bun native vs AWS SDK (same delivery) --
+  initDurationMs (cold) p50: cmr/bun=81.2ms vs cmr/aws-sdk=254.5ms -> cmr/bun faster by 213.4%
+  durationMs (warm) p50: cmr/bun=158.6ms vs cmr/aws-sdk=392.3ms -> cmr/bun faster by 147.3%
+  initDurationMs (cold) p50: layer/bun=154.8ms vs layer/aws-sdk=371.6ms -> layer/bun faster by 140.1%
+  durationMs (warm) p50: layer/bun=166.7ms vs layer/aws-sdk=381.2ms -> layer/bun faster by 128.7%
+
+  -- Runtime: official nodejs24.x vs Bun (same S3 client: aws-sdk) --
+  initDurationMs (cold) p50: node/aws-sdk=287.7ms vs cmr/aws-sdk=254.5ms -> cmr/aws-sdk faster by 13.0%
+  durationMs (warm) p50: node/aws-sdk=466.3ms vs cmr/aws-sdk=392.3ms -> cmr/aws-sdk faster by 18.9%
+  initDurationMs (cold) p50: node/aws-sdk=287.7ms vs layer/aws-sdk=371.6ms -> node/aws-sdk faster by 29.1%
+  durationMs (warm) p50: node/aws-sdk=466.3ms vs layer/aws-sdk=381.2ms -> layer/aws-sdk faster by 22.3%
+
+  -- SnapStart: docker + SnapStart vs docker without (same S3 client) --
+  coldStartMs (cold) p50: docker-snap/bun=808.0ms vs docker/bun=504.0ms -> docker/bun faster by 60.3%
+  durationMs (warm) p50: docker-snap/bun=213.9ms vs docker/bun=181.8ms -> docker/bun faster by 17.6%
+  coldStartMs (cold) p50: docker-snap/aws-sdk=2011.5ms vs docker/aws-sdk=1619.5ms -> docker/aws-sdk faster by 24.2%
+  durationMs (warm) p50: docker-snap/aws-sdk=434.5ms vs docker/aws-sdk=377.4ms -> docker/aws-sdk faster by 15.1%
+
+  -- Delivery: container image (docker) vs CMR / layer (same S3 client) --
+  coldStartMs (cold) p50: docker/bun=504.0ms vs cmr/bun=444.2ms -> cmr/bun faster by 13.4%
+  coldStartMs (cold) p50: docker/bun=504.0ms vs layer/bun=659.8ms -> docker/bun faster by 30.9%
+  coldStartMs (cold) p50: docker/aws-sdk=1619.5ms vs cmr/aws-sdk=1770.6ms -> docker/aws-sdk faster by 9.3%
+  coldStartMs (cold) p50: docker/aws-sdk=1619.5ms vs layer/aws-sdk=1990.7ms -> docker/aws-sdk faster by 22.9%
+

@@ -1,0 +1,71 @@
+# syntax=docker/dockerfile:1
+#
+# Container-image Lambda for a Bun handler ("bun in docker" variant).
+# Built and pushed by deploy-docker.sh.
+#
+# This is a REAL container-image function (`--package-type Image`), NOT a CMR
+# runtime image. The difference from Dockerfile (the CMR runtime image):
+#   - CMR ships only the runtime under /var/runtime and leaves /var/task empty;
+#     the handler zip is deployed separately as a zip function on the runtime.
+#   - Here the image is the whole function: the Bun binary, the runtime interface
+#     client (RIC), the bootstrap, AND the handler bundle in /var/task. It is
+#     deployed with the STANDARD `aws lambda create-function --package-type Image`.
+#
+# Because it runs on the standard Lambda service, this variant can opt into
+# SnapStart (--snap-start ApplyOn=PublishedVersions). SnapStart for container
+# images is GA; for custom base images the runtime simply blocks on the runtime
+# API "next" call while the snapshot is taken, so no restore hooks are needed.
+#
+# HANDLER_VARIANT build arg selects which S3 client the image bundles:
+#   bun    -> handler-bun.ts    (Bun native S3Client)
+#   awssdk -> handler-awssdk.ts (@aws-sdk/client-s3)
+# Each variant is a separate image so its cold-start init cost reflects only the
+# client it bundles (same rationale as the zip variants — see README).
+
+# IMPORTANT: use the glibc (Debian) bun image, NOT -alpine. The Lambda base
+# public.ecr.aws/lambda/provided:al2023 is glibc; a musl bun binary cannot exec
+# there and fails at cold start with "exit status 127".
+FROM oven/bun:1.4.4 AS build
+
+ARG HANDLER_VARIANT=bun
+
+WORKDIR /build
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile
+
+COPY core.ts handler-bun.ts handler-awssdk.ts ./
+COPY runtime/runtime.mts ./runtime/runtime.mts
+
+# Bundle the runtime interface client and the selected handler. The handler is
+# emitted as bench-<variant>.js so the _HANDLER string "bench-<variant>.handler"
+# resolves it, exactly like the zip variants built by config.sh:build_handler_zip.
+#   - @beesolve/lambda-bun-runtime is marked external as a safeguard (handlers
+#     never import it, but this guarantees it can't leak into the bundle).
+RUN bun build runtime/runtime.mts --target=bun --production --outfile runtime.mjs \
+ && bun build "handler-${HANDLER_VARIANT}.ts" --target=bun --minify \
+      --external @beesolve/lambda-bun-runtime \
+      --outfile "bench-${HANDLER_VARIANT}.js"
+
+FROM public.ecr.aws/lambda/provided:al2023
+
+ARG HANDLER_VARIANT=bun
+# Record the variant so the entry bootstrap can build the _HANDLER default and so
+# `docker run` / tooling can inspect it.
+ENV BENCH_HANDLER_VARIANT="${HANDLER_VARIANT}"
+
+# Bun binary + bundled runtime + bootstrap live under /var/runtime (mirrors the
+# CMR layout so the same runtime.mjs / bootstrap are reused unchanged).
+COPY --from=build /usr/local/bin/bun /usr/local/bin/bun
+COPY --from=build /build/runtime.mjs /var/runtime/runtime.mjs
+COPY runtime/bootstrap /var/runtime/bootstrap
+
+# The handler bundle is the function code and MUST live in /var/task (LAMBDA_TASK_ROOT).
+COPY --from=build /build/bench-${HANDLER_VARIANT}.js /var/task/bench-${HANDLER_VARIANT}.js
+
+RUN chmod 0755 /var/runtime/bootstrap
+
+# For container-image functions the ENTRYPOINT is the bootstrap (the standard
+# Lambda service honors it, unlike CMR which ignores it). CMD carries the default
+# handler string; create-function can override it with --image-config Command=...
+ENTRYPOINT ["/var/runtime/bootstrap"]
+CMD ["bench-bun.handler"]
